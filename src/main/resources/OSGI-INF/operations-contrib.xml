@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<component 	name="org.athento.nuxeo.automation.nuxeo_convert_attached_files_to_PDF_content"
+	version="1.0.0">
+	<extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent"
+		point="operations">
+		<operation class="org.athento.nuxeo.operations.ConvertAttachedFilesToPDFContent" />
+	</extension>
+	<extension target="org.nuxeo.ecm.core.convert.service.ConversionServiceImpl"
+		point="converter">
+		<converter name="JPG2PDFConverter"
+			class="org.athento.nuxeo.converters.JPG2PDFConverter">
+			<destinationMimeType>application/pdf</destinationMimeType>
+			<sourceMimeType>image/jpeg</sourceMimeType>
+		</converter>
+	</extension>
+	
+	<extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent"
+		point="chains">
+		<chain id="ATHENTO_ConcatenateAttachedFilesToContent">
+			<operation id="Context.FetchDocument" />
+			<operation id="Athento.ConvertAttachedFilesToPDFContent">
+			</operation>
+		</chain>
+	</extension>
+</component>

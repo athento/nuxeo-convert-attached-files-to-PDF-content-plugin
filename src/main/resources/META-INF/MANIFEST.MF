@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Require-Bundle: org.nuxeo.runtime
+Bundle-Vendor: Athento
+Bundle-Version: 1.0.0
+Bundle-Name: Athento - org.athento.nuxeo.automation.nuxeo_convert_atta
+ ched_files_to_PDF_content
+Bundle-ManifestVersion: 2
+Nuxeo-Component: OSGI-INF/operations-contrib.xml
+Created-By: Athento
+Bundle-SymbolicName: org.athento.nuxeo.plugins.automation.nuxeo_conver
+ t_attached_files_to_PDF_content
+
