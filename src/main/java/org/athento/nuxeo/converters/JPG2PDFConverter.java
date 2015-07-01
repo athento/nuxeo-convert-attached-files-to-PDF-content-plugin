@@ -77,7 +77,7 @@ public class JPG2PDFConverter implements Converter {
 				_log.debug("  converting " + originalBlob.getFilename());
 			}
 			//Create Document Object
-			Document convertJpgToPdf = new Document();
+			Document document = new Document();
 			//Create PdfWriter for Document to hold physical file
 			File tmpFile = File.createTempFile(
 				"tempPDF", "_tmp.pdf");
@@ -85,20 +85,30 @@ public class JPG2PDFConverter implements Converter {
 				_log.debug("  tmpFile: " + tmpFile.getAbsolutePath());
 			}
 			FileOutputStream fos = new FileOutputStream(tmpFile);
-			PdfWriter writer = PdfWriter.getInstance(convertJpgToPdf, fos);
+			PdfWriter writer = PdfWriter.getInstance(document, fos);
 			if (_log.isDebugEnabled()) {
 				_log.debug("  opening PDF document");
 			}
-			convertJpgToPdf.open();
+			document.open();
 			if (_log.isDebugEnabled()) {
 				_log.debug("  opening image");
 			}
-			Image convertJpg = Image.getInstance(originalBlob.getByteArray());
-			convertJpgToPdf.add(convertJpg);
+			float indentation = 2;
+			Image image = Image.getInstance(originalBlob.getByteArray());
+			float scaler = (
+				(
+					document.getPageSize().getWidth() - document.leftMargin() 
+					- 
+					document.rightMargin() - indentation
+				) 
+				/ image.getWidth()) * 100;
+
+			image.scalePercent(scaler);
+			document.add(image);
 			if (_log.isDebugEnabled()) {
 				_log.debug("  closing streams");
 			}
-			convertJpgToPdf.close();
+			document.close();
 			fos.close();
 			if (_log.isInfoEnabled()) {
 				_log.info("Successfully converted " + originalBlob.getFilename() + " to " + tmpFile.getAbsolutePath());
